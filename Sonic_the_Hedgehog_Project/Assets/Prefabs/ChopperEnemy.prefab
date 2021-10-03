@@ -1,0 +1,173 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7122717517206395769
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7122717517206395774}
+  m_Layer: 0
+  m_Name: ChopperStopPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7122717517206395774
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7122717517206395769}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.3109741, y: -1.7590275, z: 1.2478815}
+  m_LocalScale: {x: 3.8, y: 3.8, z: 3.8}
+  m_Children: []
+  m_Father: {fileID: 7122717517372058548}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7122717517372058551
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7122717517372058548}
+  m_Layer: 0
+  m_Name: ChopperEnemy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7122717517372058548
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7122717517372058551}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -392.15903, y: 24.699028, z: -1.2478815}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 3847965215212978361}
+  - {fileID: 7122717518496482780}
+  - {fileID: 7122717517206395774}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7122717518496482783
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7122717518496482780}
+  m_Layer: 0
+  m_Name: JumpPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7122717518496482780
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7122717518496482783}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.3109741, y: -0.699028, z: 1.2478815}
+  m_LocalScale: {x: 3.8, y: 3.8, z: 3.8}
+  m_Children: []
+  m_Father: {fileID: 7122717517372058548}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &7122717518099787706
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 7122717517372058548}
+    m_Modifications:
+    - target: {fileID: 6322576833151659778, guid: ac4ee672693d86b408677642ea6e7841, type: 3}
+      propertyPath: sonic
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6322576833151659778, guid: ac4ee672693d86b408677642ea6e7841, type: 3}
+      propertyPath: jumpPoint
+      value: 
+      objectReference: {fileID: 7122717518496482780}
+    - target: {fileID: 6322576833151659778, guid: ac4ee672693d86b408677642ea6e7841, type: 3}
+      propertyPath: stopPoint
+      value: 
+      objectReference: {fileID: 7122717517206395774}
+    - target: {fileID: 6322576833151659779, guid: ac4ee672693d86b408677642ea6e7841, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6322576833151659779, guid: ac4ee672693d86b408677642ea6e7841, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.3109741
+      objectReference: {fileID: 0}
+    - target: {fileID: 6322576833151659779, guid: ac4ee672693d86b408677642ea6e7841, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.699028
+      objectReference: {fileID: 0}
+    - target: {fileID: 6322576833151659779, guid: ac4ee672693d86b408677642ea6e7841, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.2478815
+      objectReference: {fileID: 0}
+    - target: {fileID: 6322576833151659779, guid: ac4ee672693d86b408677642ea6e7841, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6322576833151659779, guid: ac4ee672693d86b408677642ea6e7841, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6322576833151659779, guid: ac4ee672693d86b408677642ea6e7841, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6322576833151659779, guid: ac4ee672693d86b408677642ea6e7841, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6322576833151659779, guid: ac4ee672693d86b408677642ea6e7841, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6322576833151659779, guid: ac4ee672693d86b408677642ea6e7841, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6322576833151659779, guid: ac4ee672693d86b408677642ea6e7841, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6322576833151659782, guid: ac4ee672693d86b408677642ea6e7841, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6322576833151659783, guid: ac4ee672693d86b408677642ea6e7841, type: 3}
+      propertyPath: m_Name
+      value: Chopper
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ac4ee672693d86b408677642ea6e7841, type: 3}
+--- !u!4 &3847965215212978361 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6322576833151659779, guid: ac4ee672693d86b408677642ea6e7841, type: 3}
+  m_PrefabInstance: {fileID: 7122717518099787706}
+  m_PrefabAsset: {fileID: 0}
