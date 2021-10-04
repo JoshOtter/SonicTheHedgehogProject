@@ -216,4 +216,352 @@ Besides the abstract base state, Sonic has 11 currently working states with some
     }
     }
     
-One of the features in his runnings states that I am very happy with is his acceleration and deacceleration based on whether or not the player is holding down one of the movement keys with his animation changing based on his current speed. The above is just one example of the different state scripts I wrote for Sonic. Feel free to take a look at the others within the scripts folder.
+One of the features in his runnings states that I am very happy with is his acceleration and deacceleration based on whether or not the player is holding down one of the movement keys with his animation changing based on his current speed. The above is just one example of the different state scripts I wrote for Sonic. Feel free to take a look at the others within the scripts folder. Here's a clip that shows Sonic accelerating and shifting into his rolling state:
+
+![SonicRollingInTunnel](https://user-images.githubusercontent.com/87107050/135913450-43c4ad8d-0e74-4d7e-9396-415505712351.gif)
+
+## Story 3 - Enemies and Their Behaviors
+I started the third story by putting together the enemy sprites and animations into prefabs and added script for each one. The challenging thing about this story was that each enemy had slightly different behaviors that had to be accounted for in their scripts. Some required triggers to activate when Sonic drew near. Some had to use kinematic rigidbodies, while others had to be dynamic. Some had to be able to travel across colliders while others had to pass through them. Each enemy had its own set of behaviors that came with new challenges. Here are a couple examples to contrast:
+
+    public class BuzzBomber : MonoBehaviour
+    {
+    //Creates a field in the inspector to link the sonic game object.
+    public GameObject sonic;
+    //Creates a variable to hold a SonicController_FSM script component.
+    private SonicController_FSM sonicScript;
+    //Creates field in the inspector to link the associated bomb spawner.
+    public GameObject bombSpawner;
+    //Creates field in the inspector to link the bomb prefab.
+    public GameObject buzzBomb;
+    //Creates an array field that will store the sprite renderers for the Buzz Bomber's child objects.
+    public SpriteRenderer[] buzzBomberChildAnimations;
+    //Creates fields in the inspector to place the Buzz Bomber's animator, 
+    //sprite renderer, circle collider, and capsule collider.
+    public Animator buzzBomberAnimator;
+    public SpriteRenderer buzzBomberSprite;
+    public CircleCollider2D buzzBomberCircleCollider;
+    public CapsuleCollider2D buzzBomberCapsuleCollider;
+
+    //Creates an array field in the inspector to place the two waypoints used by the Buzz Bomber.
+    public Transform[] waypoints = new Transform[2];
+    //Creates a field in the inspector to place the Buzz Bomber's BombSpawn child 
+    //object to set the location from which it spawns its bombs.
+    public Transform spawnPoint;
+
+    //Set's the bool value to true to enable the Move() function to keep 
+    //running as long as the Buzz Bomber isn't dead.
+    public bool canMove = true;
+
+    //Set's the initial speed of the Buzz Bomber to zero so it doesn't move until Sonic triggers its movement.
+    public float speed = 0f;
+    
+    //Used to traverse through the waypoints array.
+    int current = 0;
+
+    void Start()
+    {
+        //Collects the necessary components.
+        sonicScript = sonic.GetComponent<SonicController_FSM>();
+        buzzBomberChildAnimations = GetComponentsInChildren<SpriteRenderer>();
+        buzzBomberAnimator = GetComponent<Animator>();
+        buzzBomberSprite = GetComponent<SpriteRenderer>();
+        buzzBomberCapsuleCollider = GetComponent<CapsuleCollider2D>();
+        buzzBomberCircleCollider = GetComponent<CircleCollider2D>();
+        //Turns off the firing animation for the bomb.
+        buzzBomberChildAnimations[2].enabled = false;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        //Checks if the Buzz Bomber collides with sonic
+        if (collision.gameObject.tag == "SonicPlayer")
+        {
+            //Check's if sonic is currently spinning
+            if (sonicScript.isDeadly)
+            {
+                //Hault's movement and prevents any Invoke statments from activating.
+                speed = 0;
+                canMove = false;
+                //Plays the explosion animation, deactivates all unnecessary sprites, 
+                //and destroys the object when its finished.
+                buzzBomberAnimator.Play("Enemy_Explosion");
+                buzzBomberChildAnimations[1].enabled = false;
+                buzzBomberChildAnimations[2].enabled = false;
+                buzzBomberChildAnimations[3].enabled = false;
+                Invoke("Destroyed", 0.3f);
+            }           
+        }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        //Checks to see if it can still move (it can't if it's been hit by sonic while he is spinning)
+        if (canMove)
+        {
+            //Calls the Move() function every frame but only starts when the BuzzBomberTrigger 
+            //sets the Buzz Bomber's speed to 5;
+            Move();
+        }
+    }
+
+    private void Move()
+    {
+        //Begins moving the Buzz Bomber to the current waypoint.
+        transform.position = Vector2.MoveTowards(transform.position, waypoints[current].transform.position, speed * Time.deltaTime);
+        //Checks if the Buzz Bomber's position is equal to the current waypoint's position.
+        if (Vector2.Distance(waypoints[current].transform.position, transform.position) == 0f)
+        {
+            //Set's speed back to zero to stop the Buzz Bomber from moving.
+            speed = 0;
+            //If the current waypoint is the first waypoint, it changes the location of certain 
+            //animations and the bomb spawner object in relation to the Buzz Bomber
+            //It also reverts the animation's sprite renderers so they face the correct way.
+            if (current == 0)
+            {
+                buzzBomberSprite.flipX = false;
+                buzzBomberChildAnimations[1].transform.localPosition = new Vector2(0.17f, -0.06f);
+                buzzBomberChildAnimations[1].flipX = false;
+                buzzBomberChildAnimations[2].transform.localPosition = new Vector2(-0.2f, -0.27f);
+                buzzBomberChildAnimations[2].flipX = false;
+                bombSpawner.transform.localPosition = new Vector2(-0.2f, -0.27f);
+            }
+            //If the current waypoint is the second waypoint, it changes the location of certain 
+            //animations and the bomb spawner object in relation to the Buzz Bomber
+            //It also flips the animation's sprite renderers so they face the correct way.
+            else if (current == 1)
+            {
+                buzzBomberSprite.flipX = true;
+                buzzBomberChildAnimations[1].transform.localPosition = new Vector2(-0.17f, -0.06f);
+                buzzBomberChildAnimations[1].flipX = true;
+                buzzBomberChildAnimations[2].transform.localPosition = new Vector2(0.2f, -0.27f);
+                buzzBomberChildAnimations[2].flipX = true;
+                bombSpawner.transform.localPosition = new Vector2(0.2f, -0.27f);
+            }
+            //Adds one to current so the next time Move() is called, it targets the second waypoint.
+            current++;
+            //If the value of current becomes 2 or more, it is reset to 0 so the Buzz Bomber 
+            //can continue patrolling between the two waypoints.
+            if (current >= waypoints.Length)
+            {
+                current = 0;
+            }
+            //This series of Invoked functions control the timing of animations, 
+            //shooting its bomb, and continuing its movement.
+            Invoke("BuzzBomberEngineOff", 0.0f);
+            Invoke("BuzzBomberAims", 0.5f);
+            Invoke("BuzzBomberShoots", 0.8f);
+            Invoke("BuzzBomberStopsShooting", 1.0f);
+            Invoke("Shoot", 1f);
+            Invoke("BuzzBomberNormal", 1.2f);
+            Invoke("BuzzBomberEngineOn", 1.4f);
+            Invoke("BuzzBomberContinues", 1.4f);
+        }
+    }
+
+    //Enables the sprite renderer for the Buzz Bomber's Shooting animation.
+    private void BuzzBomberShoots()
+    {
+        if (canMove)
+        {
+            buzzBomberChildAnimations[2].enabled = true;
+        }    
+    }
+
+    //Disables the sprite renderer for the Buzz Bomber's Shooting animation.
+    private void BuzzBomberStopsShooting()
+    {
+        if (canMove)
+        {
+            buzzBomberChildAnimations[2].enabled = false;
+        }        
+    }
+
+    //Enables the sprite renderer for the Buzz Bomber's Engine animation.
+    private void BuzzBomberEngineOn()
+    {
+        if (canMove)
+        {
+            buzzBomberChildAnimations[1].enabled = true;
+        }        
+    }
+
+    //Disables the sprite renderer for the Buzz Bomber's Engine animation.
+    private void BuzzBomberEngineOff()
+    {
+        if (canMove)
+        {
+            buzzBomberChildAnimations[1].enabled = false;
+        }       
+    }
+
+    //Plays the Buzz Bomber's normal animation.
+    private void BuzzBomberNormal()
+    {
+        if (canMove)
+        {
+            buzzBomberAnimator.Play("BuzzBomberNormal");
+            buzzBomberCapsuleCollider.enabled = true;
+            buzzBomberCircleCollider.enabled = false;
+        }        
+    }
+
+    //Plays the Buzz Bomber's aiming animation.
+    private void BuzzBomberAims()
+    {
+        if (canMove)
+        {
+            buzzBomberAnimator.Play("BuzzBomberAims");
+            buzzBomberCapsuleCollider.enabled = false;
+            buzzBomberCircleCollider.enabled = true;
+        }       
+    }
+
+    //Set's the speed of the Buzz Bomber back to 5 so it can continue moving to the next waypoint.
+    private void BuzzBomberContinues()
+    {
+        if (canMove)
+        {
+            speed = 5f;
+        }        
+    }
+
+    //Instantiates the buzzBomb prefab and set's its position and rotation.
+    void Shoot()
+    {
+        if (canMove)
+        {
+            //Depending on which way the Buzz Bomber is facing, the rotation of the buzzBomb 
+            //is altered so that it shoots in the correct direction.
+            if (current == 0)
+            {
+                Instantiate(buzzBomb, spawnPoint.position, Quaternion.Euler(0, 0, 135));
+            }
+            else if (current == 1)
+            {
+                Instantiate(buzzBomb, spawnPoint.position, Quaternion.Euler(0, 0, 45));
+            }
+        }        
+    }
+
+    //Destroys the game object.
+    private void Destroyed()
+    {
+        Destroy(gameObject);
+    }
+    }
+    
+The Buzz Bomber script above is activated when Sonic hits a trigger and sets the enemy's movement speed variable. It then travels back and forth between two waypoints, turning and shooting at Sonic each time.
+
+![Buzz Bomber Movement](https://user-images.githubusercontent.com/87107050/135916279-7576c98a-de36-4d38-a1c4-328642c58298.gif)
+
+The Chopper, on the other hand, had to use gravity to produce the intended jumping affect, and yet it couldn't collide with the bridge colliders. I had to create script to catch the enemy mid fall and then send it jumping again after a brief interval, and I had to use the IsTrigger property for its colliders so that it could move through the various barriers.
+
+    public class Chopper : MonoBehaviour
+    {
+    //Creates a field in the inspector to link the sonic game object.
+    public GameObject sonic;
+    //Creates a variable to hold a SonicController_FSM script component.
+    private SonicController_FSM sonicScript;
+
+    //Creates a field in the inspector to place chopper's rigidbody2D.
+    public Rigidbody2D chopperRb2d;
+
+    //Creates a field in the inspector to place chopper's animator.
+    public Animator chopperAnimator;
+
+    //Set's the force at which the fish will keep jumping in the air.
+    public float jumpForce = 22.8f;
+
+    //Creates a float that can be adjusted that decides how soon the 
+    //chopper initially jumps upon loading.
+    public float jumpStart = 0f;
+
+    //Creates a float that can be adjusted to lengthen the time between jumps.
+    public float keepJumping = 1f;
+
+    //Declares a transform variable for the jumping point and the point 
+    //where the chopper's movement is haulted.
+    public Transform jumpPoint;
+    public Transform stopPoint;
+
+    //Declares a bool used in a check to move the chopper back to its 
+    //jumping spot in the JumpAgain() function.
+    public bool jumping = true;
+
+    void Start()
+    {
+        //Collects the necessary components.
+        sonic = GameObject.Find("Sonic");
+        sonicScript = sonic.GetComponent<SonicController_FSM>();
+        chopperAnimator = GetComponent<Animator>();
+        chopperRb2d = GetComponent<Rigidbody2D>();
+        //Activates the initial jump.
+        Invoke("Jump", jumpStart);
+    }
+
+    private void Update()
+    {
+        //Allows the chopper to continue jumping
+        JumpAgain();
+    }
+
+    void Jump()
+    {
+        //Sets the jumping bool to true so the if statement in the JumpAgain() function can activate.
+        jumping = true;
+        //Set's the chopper's gravity.
+        chopperRb2d.gravityScale = 3f;
+        //Causes the chopper's initial jump.
+        chopperRb2d.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+    }
+
+    void JumpAgain()
+    {
+        //Checks if the chopper is close enough to the stopping point and if it is currently jumping.
+        if (Vector2.Distance(stopPoint.transform.position, transform.position) < 1f && jumping == true)
+        {
+            //Set's the velocity to zero.
+            chopperRb2d.velocity = Vector2.zero;
+            //Set's gravity to zero.
+            chopperRb2d.gravityScale = 0f;
+            //Moves the chopper back to it's initial jumping point, which is far enough away 
+            //to not trigger the above if statement.
+            transform.position = new Vector2(jumpPoint.position.x, jumpPoint.position.y);
+            //Set's jumping to false so that this if statement can't run again while the chopper 
+            //is moving to the jumping point.
+            jumping = false;
+            //Calls the Jump function once again after a brief wait.
+            Invoke("Jump", keepJumping);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //Checks if the crabmeat collides with sonic
+        if (collision.gameObject.tag == "SonicPlayer")
+        {
+            //Check's if sonic is currently spinning
+            if (sonicScript.isDeadly)
+            {
+                //Set's the chopper's body to kinematic so it doesn't move while 
+                //playing the explosion animation.
+                chopperRb2d.isKinematic = true;
+                chopperAnimator.Play("Enemy_Explosion");
+                Invoke("Destroyed", 0.3f);
+            }
+        }
+    }
+
+    //destroys the game object.
+    private void Destroyed()
+    {
+        Destroy(gameObject);
+    }
+    }
+    
+![Chopper](https://user-images.githubusercontent.com/87107050/135917520-1f3e2792-8b5c-4388-9e42-155569221978.gif)
+
+Feel free to check out my other enemy scripts. As I continue working on this game, I will come back to these scripts to update their behaviors to be immitate the original game even more faithfully. I'm excited to keep learning about Unity so I can apply even better code to this game and my future projects. In the meantime, I am glad to know that I can use Unity functionality and logic to make a close approximation.
+
+## Story 4 - Gameplay Model
