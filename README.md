@@ -565,3 +565,29 @@ The Chopper, on the other hand, had to use gravity to produce the intended jumpi
 Feel free to check out my other enemy scripts. As I continue working on this game, I will come back to these scripts to update their behaviors to be immitate the original game even more faithfully. I'm excited to keep learning about Unity so I can apply even better code to this game and my future projects. In the meantime, I am glad to know that I can use Unity functionality and logic to make a close approximation.
 
 ## Story 4 - Gameplay Model
+In the last story during the live project, I created the HUD, established Sonic's lives, created the end of zone sign trigger and created an initial system for collecting and losing rings. I've already linked some gifs above showing the game over and victory overlays that pop up when triggered. I also created a timer that causes Sonic to lose a life when it reaches ten minutes. 
+
+While I still have some adjustments I want to make to the ring loss system, I was quite happy to be able to implement that functionality in its current state. Sonic also has the ability to retrieve his lost rings for a time period before they are destroyed. Here's the script from Sonic's controller showing how I instantiate the lost rings he is currently carrying when he takes damage:
+
+    private void LoseRings()
+    {
+        for (int i = 0; i < rings; i++)
+        {
+            int randomSpawnPoint = random.Next(0, 5);
+            int randomDirection = random.Next(1, 3) == 1 ? random.Next(1, 46) : random.Next(315, 360);
+            Instantiate(lostRing, lostRingSpawnPoints[randomSpawnPoint].position, Quaternion.Euler(0, 0, randomDirection));
+        }
+        rings = 0;
+    }
+    
+![Sonic Losing Rings](https://user-images.githubusercontent.com/87107050/135920931-70d4e663-a989-46e9-8606-d9340b962ade.gif)
+
+## Conclusion
+
+- During this live project, I learned a lot about Unity and became much more comfortable writing C# code to apply to specific situations. However, I know there is much more to learn and practice, and I am looking forward to that process. 
+
+- I learned to pace myself in order to build the basic features within the time limits of a two week sprint in order to create an initial program that can be fine tuned at later stage in development. I had the opportunity to participate in daily stand-up meetings and give account of my progress, my goals, and my roadblocks to my team and project manager. 
+
+- I learned how to do research to find solutions to the problems I was facing, but I also learned how to recognize when I needed to ask for help from my team and manager. 
+
+- I learned a love for game development in its challenges and its victories. Working on this project showed me how fun and fulfilling making games can be and gave me more drive to learn and grow as much as I can in this field.
