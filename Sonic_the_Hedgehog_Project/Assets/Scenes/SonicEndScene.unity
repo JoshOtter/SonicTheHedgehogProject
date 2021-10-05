@@ -244,6 +244,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneLoader
       objectReference: {fileID: 0}
+    - target: {fileID: 742165505973539170, guid: 3e931890003f9c34ba9b580b80908447, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8636361789838956601, guid: 3e931890003f9c34ba9b580b80908447, type: 3}
       propertyPath: m_Controller
       value: 
@@ -644,7 +648,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 106}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 509.1837, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2088369128
 MonoBehaviour:
@@ -666,7 +670,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Game Over
+  m_text: Would You Like to Play Again?
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

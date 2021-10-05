@@ -30,7 +30,7 @@ public class SonicController_FSM : MonoBehaviour
     public float updatedSpeed = 5f;
 
     //This is used to make Sonic jump the same height as the original game.
-    public float jumpForce = 14.9f;
+    public float jumpForce = 16f;
 
     //This is used to keep track of Sonic's score throughout the level.
     public int score = 0;
@@ -134,6 +134,21 @@ public class SonicController_FSM : MonoBehaviour
             else
             {
                 AssessLives();
+            }
+        }
+        else if (collision.gameObject.tag == "SonicEnemy")
+        {
+            if (!isDeadly)
+            {
+                if (rings > 0)
+                {
+                    LoseRings();
+                    GetHurt();
+                }
+                else
+                {
+                    AssessLives();
+                }
             }
         }
     }

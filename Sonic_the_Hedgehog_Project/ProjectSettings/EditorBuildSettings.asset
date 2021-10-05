@@ -4,5 +4,14 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/SonicTitle.unity
+    guid: 1591e1b229e79634f83fb63b84b8cc2c
+  - enabled: 1
+    path: Assets/Scenes/GreenHillZoneAct1.unity
+    guid: ba368625e07d9f1439dbe4af39ec3cac
+  - enabled: 1
+    path: Assets/Scenes/SonicEndScene.unity
+    guid: 268ccc73a21276a449de62598b28b7aa
   m_configObjects: {}

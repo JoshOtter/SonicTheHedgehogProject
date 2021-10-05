@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 7122717517372058548}
   m_Layer: 0
   m_Name: ChopperEnemy
-  m_TagString: Untagged
+  m_TagString: SonicEnemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
