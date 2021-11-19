@@ -4,7 +4,13 @@ After completing The Tech Academy's C# and Unity course, I spent two weeks on a 
 
 I quickly came to appreciate the complexity of Sonic the Hedgehog's character movement and the different states in which he is able to interact with enemies and the environment. I still have plenty of work to do to make this a truly faithful remake of the original game, but I am very proud of what I was able to accomplish over the course of the two week project. I am particularly happy with the finite state machine I used to create Sonic's controller as well as the scripts for several of the classic Sonic enemies. Certain aspects of the project were more difficult than others, but I enjoyed the challenge and had a lot of fun figuring out solutions to the various problems that came up. I learned a lot about Unity and its features, including its Animation capabilities, many of the available components and how to chose the right one for the situation, the cinemachine package, and it's 2D physics system. 
 
-The project was built using Unity 2020.3.2f1. I want to thank Joseph Judge since I used many of the sprites from his "I Can't Believe it's Not Sonic 1!" project. I also want to not that this project features a scene loader built by The Tech Academy that I will eventually replace with my own to better suit the project. Other than the one script related to the scene loader, all the script in this project was written solely by me.
+The project was built using Unity 2020.3.2f1. I want to thank Joseph Judge since I used many of the sprites from his ["I Can't Believe it's Not Sonic 1!"](https://github.com/heyjoeway/ICBINS1) project. I also want to not that this project features a scene loader built by The Tech Academy that I will eventually replace with my own to better suit the project. Other than the one script related to the scene loader, all the script in this project was written solely by me.
+
+## Table of Contents
+- [Story 1 - The Basic Scenes](https://github.com/JoshOtter/SonicTheHedgehogProject#story-1---the-basic-scenes)
+- [Story 2 - The Level and Sonic's Controller](https://github.com/JoshOtter/SonicTheHedgehogProject#story-2---the-level-and-sonics-controller)
+- [Story 3 - Enemies and Their Behaviors](https://github.com/JoshOtter/SonicTheHedgehogProject#story-3---enemies-and-their-behaviors)
+- [Story 4 - Gameplay Model](https://github.com/JoshOtter/SonicTheHedgehogProject#story-4---gameplay-model)
 ## Story 1 - The Basic Scenes
 I created 3 scenes so far for this project. The Title Menu, the Green Hill Zone Act 1 scene, and an End Menu. Rather than implementing buttons to chose what to do between the scenes, I chose to use the get GetKeyDown() function for both the beginning and ending scenes with onscreen instruction for the player. 
 
